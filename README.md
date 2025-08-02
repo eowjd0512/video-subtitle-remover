@@ -1,256 +1,228 @@
-简体中文 | [English](README_en.md)
+[简体中文](README.md) | English
 
-## 项目简介
+## Project Introduction
 
 ![License](https://img.shields.io/badge/License-Apache%202-red.svg)
 ![python version](https://img.shields.io/badge/Python-3.11+-blue.svg)
-![support os](https://img.shields.io/badge/OS-Windows/macOS/Linux-green.svg)  
+![support os](https://img.shields.io/badge/OS-Windows/macOS/Linux-green.svg)
 
-Video-subtitle-remover (VSR) 是一款基于AI技术，将视频中的硬字幕去除的软件。
-主要实现了以下功能：
-- **无损分辨率**将视频中的硬字幕去除，生成去除字幕后的文件
-- 通过超强AI算法模型，对去除字幕文本的区域进行填充（非相邻像素填充与马赛克去除）
-- 支持自定义字幕位置，仅去除定义位置中的字幕（传入位置）
-- 支持全视频自动去除所有文本（不传入位置）
-- 支持多选图片批量去除水印文本
+Video-subtitle-remover (VSR) is an AI-based software that removes hardcoded subtitles from videos. It mainly implements the following functionalities:
+
+- **Lossless resolution**: Removes hardcoded subtitles from videos and generates files without subtitles.
+- Fills in the removed subtitle text area using a powerful AI algorithm model (non-adjacent pixel filling and mosaic removal).
+- Supports custom subtitle positions by only removing subtitles in the defined location (input position).
+- Supports automatic removal of all text throughout the entire video (without inputting a position).
+- Supports multi-selection of images for batch removal of watermark text.
 
 <p style="text-align:center;"><img src="https://github.com/YaoFANGUK/video-subtitle-remover/raw/main/design/demo.png" alt="demo.png"/></p>
 
-**使用说明：**
+> Download the .zip package directly, extract, and run it. If it cannot run, follow the tutorial below to try installing the conda environment and running the source code.
 
-- 有使用问题请加群讨论，QQ群：210150985（已满）、806152575（已满）、816881808（已满）、295894827
-- 直接下载压缩包解压运行，如果不能运行再按照下面的教程，尝试源码安装conda环境运行
+**Download Links:**
 
-**下载地址：**
+Windows GPU Version v1.1.0 (GPU):
 
-Windows GPU版本v1.1.0（GPU）：
+- Baidu Cloud Disk: <a href="https://pan.baidu.com/s/1zR6CjRztmOGBbOkqK8R1Ng?pwd=vsr1">vsr_windows_gpu_v1.1.0.zip</a> Extraction Code: **vsr1**
 
-- 百度网盘:  <a href="https://pan.baidu.com/s/1zR6CjRztmOGBbOkqK8R1Ng?pwd=vsr1">vsr_windows_gpu_v1.1.0.zip</a> 提取码：**vsr1**
+- Google Drive: <a href="https://drive.google.com/drive/folders/1NRgLNoHHOmdO4GxLhkPbHsYfMOB_3Elr?usp=sharing">vsr_windows_gpu_v1.1.0.zip</a>
 
-- Google Drive:  <a href="https://drive.google.com/drive/folders/1NRgLNoHHOmdO4GxLhkPbHsYfMOB_3Elr?usp=sharing">vsr_windows_gpu_v1.1.0.zip</a>
 
-**预构建包对比说明**：
-|       预构建包名          | Python  | Paddle | Torch | 环境                          | 支持的计算能力范围|
-|---------------|------------|--------------|--------------|-----------------------------|----------|
-| `vsr-windows-directml.7z`  | 3.12       | 3.0.0       | 2.4.1       | Windows 非Nvidia显卡             | 通用 |
-| `vsr-windows-nvidia-cuda-11.8.7z` | 3.12       | 3.0.0        | 2.7.0       | CUDA 11.8   | 3.5 – 8.9 |
-| `vsr-windows-nvidia-cuda-12.6.7z` | 3.12       | 3.0.0       | 2.7.0       | CUDA 12.6   | 5.0 – 8.9 |
-| `vsr-windows-nvidia-cuda-12.8.7z` | 3.12       | 3.0.0       | 2.7.0       | CUDA 12.8   | 5.0 – 9.0+ |
+**Pre-built Package Comparison**:
 
-> NVIDIA官方提供了各GPU型号的计算能力列表，您可以参考链接: [CUDA GPUs](https://developer.nvidia.com/cuda-gpus) 查看你的GPU适合哪个CUDA版本
+| Pre-built Package Name          | Python | Paddle | Torch | Environment                       | Supported Compute Capability Range |
+|----------------------------------|--------|--------|--------|-----------------------------------|------------------------------------|
+| `vse-windows-directml.7z`        | 3.12   | 3.0.0 | 2.4.1 | Windows without Nvidia GPU         | Universal                         |
+| `vse-windows-nvidia-cuda-11.8.7z`| 3.12   | 3.0.0 | 2.7.0 | CUDA 11.8                         | 3.5 – 8.9                          |
+| `vse-windows-nvidia-cuda-12.6.7z`| 3.12   | 3.0.0 | 2.7.0 | CUDA 12.6                         | 5.0 – 8.9                          |
+| `vse-windows-nvidia-cuda-12.8.7z`| 3.12   | 3.0.0 | 2.7.0 | CUDA 12.8                         | 5.0 – 9.0+                          |
 
-**Docker版本：**
+> NVIDIA provides a list of supported compute capabilities for each GPU model. You can refer to the following link: [CUDA GPUs](https://developer.nvidia.com/cuda-gpus) to check which CUDA version is compatible with your GPU.
+
+**Docker Versions:**
 ```shell
-  # Nvidia 10 20 30系显卡
-  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda11.8
+  # Nvidia 10, 20, 30 Series Graphics Cards
+  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda11.8 
 
-  # Nvidia 40系显卡
-  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda12.6
+  # Nvidia 40 Series Graphics Cards
+  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda12.6 
 
-  # Nvidia 50系显卡
-  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda12.8
+  # Nvidia 50 Series Graphics Cards
+  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-cuda12.8 
 
-  # AMD / Intel 独显 集显
-  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-directml
+  # AMD / Intel Dedicated or Integrated Graphics
+  docker run -it --name vsr --gpus all eritpchy/video-subtitle-remover:1.1.1-directml 
 
-  # 演示视频, 输入
+  # Demo video, input
   /vsr/test/test.mp4
   docker cp vsr:/vsr/test/test_no_sub.mp4 ./
 ```
 
-## 演示
+## Demonstration
 
-- GUI版：
+- GUI:
 
 <p style="text-align:center;"><img src="https://github.com/YaoFANGUK/video-subtitle-remover/raw/main/design/demo2.gif" alt="demo2.gif"/></p>
 
-- <a href="https://b23.tv/guEbl9C">点击查看演示视频👇</a>
+- <a href="https://b23.tv/guEbl9C">Click to view demo video👇</a>
 
 <p style="text-align:center;"><a href="https://b23.tv/guEbl9C"><img src="https://github.com/YaoFANGUK/video-subtitle-remover/raw/main/design/demo.gif" alt="demo.gif"/></a></p>
 
-## 源码使用说明
+## Source Code Usage Instructions
 
+#### 1. Install Python
 
-#### 1. 安装 Python
+Please ensure that you have installed Python 3.12+.
 
-请确保您已经安装了 Python 3.12+。
-
-- Windows 用户可以前往 [Python 官网](https://www.python.org/downloads/windows/) 下载并安装 Python。
-- MacOS 用户可以使用 Homebrew 安装：
+- Windows users can go to the [Python official website](https://www.python.org/downloads/windows/) to download and install Python.
+- MacOS users can install using Homebrew:
   ```shell
   brew install python@3.12
   ```
-- Linux 用户可以使用包管理器安装，例如 Ubuntu/Debian：
+- Linux users can install via the package manager, such as on Ubuntu/Debian:
   ```shell
   sudo apt update && sudo apt install python3.12 python3.12-venv python3.12-dev
   ```
 
-#### 2. 安装依赖文件
+#### 2. Install Dependencies
 
-请使用虚拟环境来管理项目依赖，避免与系统环境冲突。
+It is recommended to use a virtual environment to manage project dependencies to avoid conflicts with the system environment.
 
-（1）创建虚拟环境并激活
+(1) Create and activate the virtual environment:
 ```shell
 python -m venv videoEnv
 ```
 
-- Windows：
+- Windows:
 ```shell
 videoEnv\\Scripts\\activate
 ```
-- MacOS/Linux：
+- MacOS/Linux:
 ```shell
 source videoEnv/bin/activate
 ```
 
-#### 3. 创建并激活项目目录
+#### 3. Create and Activate Project Directory
 
-切换到源码所在目录：
+Change to the directory where your source code is located:
 ```shell
-cd <源码所在目录>
+cd <source_code_directory>
 ```
-> 例如：如果您的源代码放在 D 盘的 tools 文件夹下，并且源代码的文件夹名为 video-subtitle-remover，则输入：
+> For example, if your source code is in the `tools` folder on the D drive and the folder name is `video-subtitle-remover`, use:
 > ```shell
 > cd D:/tools/video-subtitle-remover-main
 > ```
 
-#### 4. 安装合适的运行环境
+#### 4. Install the Appropriate Runtime Environment
 
-本项目支持 CUDA（NVIDIA显卡加速）和 DirectML（AMD、Intel等GPU/APU加速）两种运行模式。
+This project supports two runtime modes: CUDA (NVIDIA GPU acceleration) and DirectML (AMD, Intel, and other GPUs/APUs).
 
-##### (1) CUDA（NVIDIA 显卡用户）
+##### (1) CUDA (For NVIDIA GPU users)
 
-> 请确保您的 NVIDIA 显卡驱动支持所选 CUDA 版本。
+> Make sure your NVIDIA GPU driver supports the selected CUDA version.
 
-- 推荐 CUDA 11.8，对应 cuDNN 8.6.0。
+- Recommended CUDA 11.8, corresponding to cuDNN 8.6.0.
 
-- 安装 CUDA：
-  - Windows：[CUDA 11.8 下载](https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_522.06_windows.exe)
-  - Linux：
+- Install CUDA:
+  - Windows: [Download CUDA 11.8](https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_522.06_windows.exe)
+  - Linux:
     ```shell
     wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
     sudo sh cuda_11.8.0_520.61.05_linux.run
     ```
-  - MacOS 不支持 CUDA。
+  - CUDA is not supported on MacOS.
 
-- 安装 cuDNN（CUDA 11.8 对应 cuDNN 8.6.0）：
-  - [Windows cuDNN 8.6.0 下载](https://developer.download.nvidia.cn/compute/redist/cudnn/v8.6.0/local_installers/11.8/cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip)
-  - [Linux cuDNN 8.6.0 下载](https://developer.download.nvidia.cn/compute/redist/cudnn/v8.6.0/local_installers/11.8/cudnn-linux-x86_64-8.6.0.163_cuda11-archive.tar.xz)
-  - 安装方法请参考 NVIDIA 官方文档。
+- Install cuDNN (CUDA 11.8 corresponds to cuDNN 8.6.0):
+  - [Windows cuDNN 8.6.0 Download](https://developer.download.nvidia.cn/compute/redist/cudnn/v8.6.0/local_installers/11.8/cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip)
+  - [Linux cuDNN 8.6.0 Download](https://developer.download.nvidia.cn/compute/redist/cudnn/v8.6.0/local_installers/11.8/cudnn-linux-x86_64-8.6.0.163_cuda11-archive.tar.xz)
+  - Follow the installation guide in the NVIDIA official documentation.
 
-- 安装 PaddlePaddle GPU 版本（CUDA 11.8）：
+- Install PaddlePaddle GPU version (CUDA 11.8):
   ```shell
   pip install paddlepaddle-gpu==3.0.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
   ```
-- 安装 Torch GPU 版本（CUDA 11.8）：
+
+- Install Torch GPU version (CUDA 11.8):
   ```shell
   pip install torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu118
   ```
 
-- 安装其他依赖
+- Install other dependencies:
   ```shell
   pip install -r requirements.txt
   ```
 
-##### (2) DirectML（AMD、Intel等GPU/APU加速卡用户）
+##### (2) DirectML (For AMD, Intel, and other GPU/APU users)
 
-- 适用于 Windows 设备的 AMD/NVIDIA/Intel GPU。
-- 安装 ONNX Runtime DirectML 版本：
+- Suitable for Windows devices with AMD/NVIDIA/Intel GPUs.
+- Install ONNX Runtime DirectML version:
   ```shell
   pip install paddlepaddle==3.0.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
   pip install -r requirements.txt
-  pip install torch_directml==0.2.5.dev240914
+  pip install -r requirements_directml.txt
   ```
 
 
-#### 4. 运行程序
+#### 4. Run the program
 
-- 运行图形化界面
+- Run the graphical interface
 
 ```shell
 python gui.py
 ```
 
-- 运行命令行版本(CLI)
+- Run the command line version (CLI)
 
 ```shell
 python ./backend/main.py
 ```
 
-## 常见问题
-1. 提取速度慢怎么办
+## Common Issues
 
-修改backend/config.py中的参数，可以大幅度提高去除速度
+1. How to deal with slow removal speed
+
+You can greatly increase the removal speed by modifying the parameters in backend/config.py:
+
 ```python
-MODE = InpaintMode.STTN  # 设置为STTN算法
-STTN_SKIP_DETECTION = True # 跳过字幕检测，跳过后可能会导致要去除的字幕遗漏或者误伤不需要去除字幕的视频帧
+MODE = InpaintMode.STTN  # Set to STTN algorithm
+STTN_SKIP_DETECTION = True # Skip subtitle detection
 ```
 
-2. 视频去除效果不好怎么办
+2. What to do if the video removal results are not satisfactory
 
-修改backend/config.py中的参数，尝试不同的去除算法，算法介绍
+Modify the values in backend/config.py and try different removal algorithms. Here is an introduction to the algorithms:
 
-> - InpaintMode.STTN 算法：对于真人视频效果较好，速度快，可以跳过字幕检测
-> - InpaintMode.LAMA 算法：对于图片效果最好，对动画类视频效果好，速度一般，不可以跳过字幕检测
-> - InpaintMode.PROPAINTER 算法： 需要消耗大量显存，速度较慢，对运动非常剧烈的视频效果较好
+> - **InpaintMode.STTN** algorithm: Good for live-action videos and fast in speed, capable of skipping subtitle detection
+> - **InpaintMode.LAMA** algorithm: Best for images and effective for animated videos, moderate speed, unable to skip subtitle detection
+> - **InpaintMode.PROPAINTER** algorithm: Consumes a significant amount of VRAM, slower in speed, works better for videos with very intense movement
 
-- 使用STTN算法
+- Using the STTN algorithm
 
 ```python
-MODE = InpaintMode.STTN  # 设置为STTN算法
-# 相邻帧数, 调大会增加显存占用，效果变好
+MODE = InpaintMode.STTN  # Set to STTN algorithm
+# Number of neighboring frames, increasing this will increase memory usage and improve the result
 STTN_NEIGHBOR_STRIDE = 10
-# 参考帧长度, 调大会增加显存占用，效果变好
+# Length of reference frames, increasing this will increase memory usage and improve the result
 STTN_REFERENCE_LENGTH = 10
-# 设置STTN算法最大同时处理的帧数量，设置越大速度越慢，但效果越好
-# 要保证STTN_MAX_LOAD_NUM大于STTN_NEIGHBOR_STRIDE和STTN_REFERENCE_LENGTH
+# Set the maximum number of frames processed simultaneously by the STTN algorithm, a larger value leads to slower processing but better results
+# Ensure that STTN_MAX_LOAD_NUM is greater than STTN_NEIGHBOR_STRIDE and STTN_REFERENCE_LENGTH
 STTN_MAX_LOAD_NUM = 30
 ```
-- 使用LAMA算法
+- Using the LAMA algorithm
+
 ```python
-MODE = InpaintMode.LAMA  # 设置为STTN算法
-LAMA_SUPER_FAST = False  # 保证效果
+MODE = InpaintMode.LAMA  # Set to LAMA algorithm
+LAMA_SUPER_FAST = False  # Ensure quality
 ```
 
-> 如果对模型去字幕的效果不满意，可以查看design文件夹里面的训练方法，利用backend/tools/train里面的代码进行训练，然后将训练的模型替换旧模型即可
 
 3. CondaHTTPError
 
-将项目中的.condarc放在用户目录下(C:/Users/<你的用户名>)，如果用户目录已经存在该文件则覆盖
+Place the .condarc file from the project in the user directory (C:/Users/<your_username>). If the file already exists in the user directory, overwrite it.
 
-解决方案：https://zhuanlan.zhihu.com/p/260034241
+Solution: https://zhuanlan.zhihu.com/p/260034241
 
-4. 7z文件解压错误
+4. 7z file extraction error
 
-解决方案：升级7-zip解压程序到最新版本
+Solution: Upgrade the 7-zip extraction program to the latest version.
 
 
-## 赞助
-
-<img src="https://github.com/YaoFANGUK/video-subtitle-extractor/raw/main/design/sponsor.png" width="600">
-
-| 捐赠者                       | 累计捐赠金额     | 赞助席位 |
-|---------------------------|------------| --- |
-| 坤V                        | 400.00 RMB | 金牌赞助席位 |
-| Jenkit                        | 200.00 RMB | 金牌赞助席位 |
-| 子车松兰                        | 188.00 RMB | 金牌赞助席位 |
-| 落花未逝                        | 100.00 RMB | 金牌赞助席位 |
-| 张音乐                        | 100.00 RMB | 金牌赞助席位 |
-| 麦格                        | 100.00 RMB | 金牌赞助席位 |
-| 无痕                        | 100.00 RMB | 金牌赞助席位 |
-| wr                        | 100.00 RMB | 金牌赞助席位 |
-| 陈                        | 100.00 RMB | 金牌赞助席位 |
-| lyons                        | 100.00 RMB | 金牌赞助席位 |
-| TalkLuv                   | 50.00 RMB  | 银牌赞助席位 |
-| 陈凯                        | 50.00 RMB  | 银牌赞助席位 |
-| Tshuang                   | 20.00 RMB  | 银牌赞助席位 |
-| 很奇异                       | 15.00 RMB  | 银牌赞助席位 |
-| 郭鑫                       | 12.00 RMB  | 银牌赞助席位 |
-| 生活不止眼前的苟且                        | 10.00 RMB  | 铜牌赞助席位 |
-| 何斐                        | 10.00 RMB  | 铜牌赞助席位 |
-| 老猫                        | 8.80 RMB   | 铜牌赞助席位 |
-| 伍六七                      | 7.77 RMB   | 铜牌赞助席位 |
-| 长缨在手                      | 6.00 RMB   | 铜牌赞助席位 |
-| 无忌                      | 6.00 RMB   | 铜牌赞助席位 |
-| Stephen                   | 2.00 RMB   | 铜牌赞助席位 |
-| Leo                       | 1.00 RMB   | 铜牌赞助席位 |
